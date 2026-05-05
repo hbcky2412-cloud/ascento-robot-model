@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoGebra — Hình học động</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+  <style>
+    :root {
+      --bg: #0c0f14;
+      --surface: #13171f;
+      --border: #1e2530;
+      --accent: #4f8ef7;
+      --accent2: #a78bfa;
+      --text: #e8edf5;
+      --muted: #6b7a94;
+      --grid: rgba(79,142,247,0.05);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow orbs */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb2 {
+      position: fixed;
+      bottom: -150px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 36px 48px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .logo-badge span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      padding: 48px 48px 32px;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Stats row */
+    .stats {
+      position: relative;
+      z-index: 10;
+      padding: 0 48px 32px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 140px;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .stat-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .stat-value.blue { color: var(--accent); }
+    .stat-value.purple { color: var(--accent2); }
+
+    /* Applet container */
+    .applet-wrap {
+      position: relative;
+      z-index: 10;
+      padding: 0 48px 48px;
+    }
+
+    .applet-frame {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow:
+        0 0 0 1px rgba(79,142,247,0.06),
+        0 32px 80px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .applet-topbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+    }
+    .dot.red    { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green  { background: #28c840; }
+
+    .applet-url {
+      margin-left: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    #ggb-element {
+      width: 100%;
+      height: 620px;
+    }
+
+    /* Angle table */
+    .info-section {
+      position: relative;
+      z-index: 10;
+      padding: 0 48px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .info-card h3 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    td:first-child {
+      font-family: 'DM Mono', monospace;
+      color: var(--accent);
+      font-size: 12px;
+      width: 40%;
+    }
+
+    td:last-child {
+      text-align: right;
+      font-family: 'DM Mono', monospace;
+      color: var(--text);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .desc-text {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .desc-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      header, .hero, .stats, .applet-wrap, .info-section, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .info-section { grid-template-columns: 1fr; }
+      #ggb-element { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb2"></div>
+
+<header>
+  <div class="logo-badge">
+    <span></span>
+    GeoGebra Interactive
+  </div>
+  <div class="tag">Hình học động</div>
+</header>
+
+<section class="hero">
+  <h1>Cấu trúc hình học<br/><em>tương tác động</em></h1>
+  <p>Bài toán hình học với các điểm A, B, D, P và vòng tròn circle1. Kéo thanh trượt <strong>theta2</strong> để quan sát sự thay đổi của các góc và vector trong thời gian thực.</p>
+</section>
+
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-label">Theta2</div>
+    <div class="stat-value blue">43.23°</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">phi1 ∠(vBA, vBC)</div>
+    <div class="stat-value">87.53°</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">phi3 ∠(vCB, vCD)</div>
+    <div class="stat-value">87.68°</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">phi5 ∠(vDC, vDA)</div>
+    <div class="stat-value purple">106.78°</div>
+  </div>
+</div>
+
+<div class="applet-wrap">
+  <div class="applet-frame">
+    <div class="applet-topbar">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
+      <div class="applet-url">construction.ggb — GeoGebra Graphing</div>
+    </div>
+    <div id="ggb-element"></div>
+  </div>
+</div>
+
+<div class="info-section">
+  <div class="info-card">
+    <h3>Bảng góc đo</h3>
+    <table>
+      <tr>
+        <td>phi1</td>
+        <td>Angle(vBA, vBC)</td>
+        <td>87.5305°</td>
+      </tr>
+      <tr>
+        <td>phi3</td>
+        <td>Angle(vCB, vCD)</td>
+        <td>87.6759°</td>
+      </tr>
+      <tr>
+        <td>phi5</td>
+        <td>Angle(vDC, vDA)</td>
+        <td>106.7848°</td>
+      </tr>
+      <tr>
+        <td>phiPQ</td>
+        <td>Angle(vAB, vAD)</td>
+        <td>78.0088°</td>
+      </tr>
+      <tr>
+        <td>phi7</td>
+        <td>Angle(vPC, Vector)</td>
+        <td>40.2064°</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="info-card">
+    <h3>Mô tả bài toán</h3>
+    <p class="desc-text">
+      Bài toán khảo sát <strong>tứ giác ABCD</strong> nội tiếp đường tròn <strong>circle1</strong>.
+      Điểm <strong>P</strong> là điểm động trên đường thẳng, với các điểm chân đường cao
+      <strong>H1, H2</strong>. Slider <strong>theta2</strong> điều khiển góc quay của cấu hình.
+      <br/><br/>
+      Các vector vBA, vBC, vCB, vCD, vDC, vDA biểu diễn hướng của các cạnh tứ giác.
+      Vector vPC kết nối điểm P với đỉnh C.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <span>Built with GeoGebra + GitHub Pages</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+  var params = {
+    "appName": "graphing",
+    "width": "100%",
+    "height": 620,
+    "filename": "construction.ggb",   // ← đổi tên file .ggb của bạn ở đây
+    "showToolBar": true,
+    "showAlgebraInput": true,
+    "showMenuBar": true,
+    "showResetIcon": true,
+    "enableLabelDrags": false,
+    "enableShiftDragZoom": true,
+    "enableRightClick": false,
+    "borderColor": null,
+    "useBrowserForJS": false,
+    "allowStyleBar": false,
+    "preventFocus": false,
+    "showZoomButtons": true,
+    "capturingThreshold": 3,
+    "appletOnLoad": function(api) {
+      console.log("GeoGebra loaded successfully");
+    }
+  };
+  var applet = new GGBApplet(params, true);
+  window.addEventListener("load", function() {
+    applet.inject("ggb-element");
+  });
+</script>
+
+</body>
+</html>
