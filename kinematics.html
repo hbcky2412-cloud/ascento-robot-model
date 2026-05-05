@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<title>GeoGebra - Construction Protocol</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"></head>
+<body>
+<h1>Project_ ASCENTO</h1>
+<table border="1">
+<tr>
+<th>Name</th>
+<th>Definition</th>
+<th>Value</th>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#1565C0">Point A</span></td>
+<td>&nbsp;</td>
+<td><span style="color:#1565C0">A = (87.5, 87.5)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#1565C0">Point B</span></td>
+<td>&nbsp;</td>
+<td><span style="color:#1565C0">B = (0, 0)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Number theta2</td>
+<td>&nbsp;</td>
+<td>theta2 = 43.69</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#6E6D73">Point C</span></td>
+<td><span style="color:#6E6D73">B + (247.5cos(theta2), 247.5sin(theta2))</span></td>
+<td><span style="color:#6E6D73">C = (237.0021569650052, -71.3177929687608)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Circle circle1</td>
+<td>Circle(A, 247.5)</td>
+<td>circle1: (x - 87.5)² + (y - 87.5)² = 61256.25</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Circle circle2</td>
+<td>Circle(C, 61.875)</td>
+<td>circle2: (x - 237.0021569650052)² + (y + 71.3177929687608)² = 3828.515625</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#6E6D73">Point D</span></td>
+<td><span style="color:#6E6D73">Intersect(circle1, circle2)</span></td>
+<td><span style="color:#6E6D73">D = (294.429034955735, -48.2815322210212)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#6E6D73">Point E</span></td>
+<td><span style="color:#6E6D73">Intersect(circle1, circle2)</span></td>
+<td><span style="color:#6E6D73">E = (210.5408697489056, -127.2491428887036)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#6E6D73">Point P</span></td>
+<td><span style="color:#6E6D73">D + 309.375 &#x2F; Distance(C, D) (C - D)</span></td>
+<td><span style="color:#6E6D73">P = (7.2946450020864, -163.4628359597189)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Segment L1</td>
+<td>Segment(A, B)</td>
+<td>L1 = 123.7436867076458</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Segment L2</td>
+<td>Segment(B, C)</td>
+<td>L2 = 247.5</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Segment L3</td>
+<td>Segment(C, D)</td>
+<td>L3 = 61.875</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Segment L4</td>
+<td>Segment(D, A)</td>
+<td>L4 = 247.5</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Segment segP</td>
+<td>Segment(D, P)</td>
+<td>segP = 309.375</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#1565C0">Point H1</span></td>
+<td>&nbsp;</td>
+<td><span style="color:#1565C0">H1 = (0, -62.5)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td><span style="color:#1565C0">Point H2</span></td>
+<td>&nbsp;</td>
+<td><span style="color:#1565C0">H2 = (0, -412.5)</span></td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Number AB</td>
+<td>Distance(A, B)</td>
+<td>AB = 123.7436867076458</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vAB</td>
+<td>Vector(A, B)</td>
+<td>vAB = (-87.5, -87.5)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vBA</td>
+<td>Vector(B, A)</td>
+<td>vBA = (87.5, 87.5)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vBC</td>
+<td>Vector(B, C)</td>
+<td>vBC = (237.0021569650052, -71.3177929687608)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vCB</td>
+<td>Vector(C, B)</td>
+<td>vCB = (-237.0021569650052, 71.3177929687608)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vCD</td>
+<td>Vector(C, D)</td>
+<td>vCD = (57.4268779907297, 23.0362607477395)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vDC</td>
+<td>Vector(D, C)</td>
+<td>vDC = (-57.4268779907297, -23.0362607477395)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vAD</td>
+<td>Vector(A, D)</td>
+<td>vAD = (206.929034955735, -135.7815322210212)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vDA</td>
+<td>Vector(D, A)</td>
+<td>vDA = (-206.929034955735, 135.7815322210212)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vCP</td>
+<td>Vector(C, P)</td>
+<td>vCP = (-229.7075119629188, -92.1450429909581)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Vector vPC</td>
+<td>Vector(P, C)</td>
+<td>vPC = (229.7075119629188, 92.1450429909581)</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Angle phi1</td>
+<td>Angle(vBA, vBC)</td>
+<td>phi1 = 61.7473930734335°</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Angle phi3</td>
+<td>Angle(vCB, vCD)</td>
+<td>phi3 = 141.3948747848649°</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Angle phi5</td>
+<td>Angle(vDC, vDA)</td>
+<td>phi5 = 55.1295917574201°</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Angle phiPQ</td>
+<td>Angle(vAB, vAD)</td>
+<td>phiPQ = 101.7281403842815°</td>
+</tr>
+<tr style='vertical-align:baseline;'>
+<td>Angle phi7</td>
+<td>Angle(vPC, Vector((0, 0), (0, 1)))</td>
+<td>phi7 = 68.1422678582984°</td>
+</tr>
+</table>
+Created with <a href="https://www.geogebra.org/" target="_blank" >GeoGebra</a>
+<!-- Base64 string so that this file can be opened in GeoGebra with File -> Open -->
+<applet width='1' height='1' code='' style="display:none">
+<param name="ggbBase64" value="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">
+</applet>
+</body>
+</html>
