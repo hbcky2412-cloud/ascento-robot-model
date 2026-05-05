@@ -1,5 +1,7 @@
 # ascento-robot-model
 Modeling and dynamic analysis of the ASCENTO wheeled-biped robot, including kinematics, floating-base dynamics, closed-loop constraints and contact modeling.
+## 🔗 Demo 
+👉 [Watch GeoGebra here](https://hbcky2412-cloud.github.io/ascento-robot-model/)
 # ASCENTO Robot Modeling
 
 This project focuses on the mathematical modeling and dynamic analysis of the **ASCENTO robot**, a wheeled-bipedal mobile robot capable of balancing and jumping.
